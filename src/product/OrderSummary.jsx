@@ -1,4 +1,31 @@
+import { useContext } from 'react';
+import { CartContext } from "../context";
+
 export default function OrderSummary() {
+
+    let discount = 20;
+    let deliveryFee = 15;
+
+    const { cartData } = useContext(CartContext);
+
+    const subtotal = cartData.reduce(handelSubTotal, 0)
+
+    function handelSubTotal(total, item) {
+        return total + (item.price * item.quentity)
+    }
+
+    let discountAmount = parseFloat((subtotal * (discount / 100)).toFixed(2));
+
+    function handelTotal() {
+        if (subtotal) {
+            return Math.round(subtotal - discountAmount + deliveryFee)
+        } else {
+            return 0
+        }
+    }
+
+    const total = handelTotal();
+
     return (
         <div className="mt-6">
             <h3 className="font-bold text-lg mb-4">Order Summary</h3>
@@ -6,22 +33,21 @@ export default function OrderSummary() {
             <div className="space-y-2 mb-4">
                 <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-medium">$565</span>
+                    <span className="font-medium">${subtotal}</span>
                 </div>
                 <div className="flex justify-between text-red-500">
-                    <span>Discount (-20%)</span>
-                    <span>-$113</span>
+                    <span>Discount (-{discount}%)</span>
+                    <span>-${discountAmount}</span>
                 </div>
                 <div className="flex justify-between">
                     <span className="text-gray-600">Delivery Fee</span>
-                    <span className="font-medium">$15</span>
+                    <span className="font-medium">${deliveryFee}</span>
                 </div>
                 <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200">
                     <span>Total</span>
-                    <span>$467</span>
+                    <span>${total}</span>
                 </div>
             </div>
-
 
             <div className="flex items-center space-x-2 mb-6">
                 <div className="flex-grow relative">
@@ -37,7 +63,6 @@ export default function OrderSummary() {
                 </div>
                 <button className="bg-black text-white rounded-md px-4 py-2 text-sm">Apply</button>
             </div>
-
 
             <a href="#"
                 className="block bg-black text-white text-center py-3 rounded-md hover:bg-gray-800 transition-colors">

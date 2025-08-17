@@ -1,9 +1,11 @@
-import { getAllProducts } from "../data/products";
+import { useContext } from 'react';
+import { ProductContext } from "../context";
 import ProductCard from "./ProductCard";
 
 export default function ProductList() {
 
-    const products = getAllProducts()
+    const { products } = useContext(ProductContext);
+
 
     return (
         <div className="lg:col-span-2">
