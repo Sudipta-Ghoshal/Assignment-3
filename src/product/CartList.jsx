@@ -10,67 +10,6 @@ export default function CartList({ item }) {
     const { cartData, setCartData } = useContext(CartContext);
 
 
-
-    function handelAddQuentity() {
-        if (item.stock > item.quentity) {
-            const nextProduct = products.map((i) => {
-                if (i.id === item.id) {
-                    return {
-                        ...i,
-                        stock: i.stock - 1,
-                    }
-                } else {
-                    return i
-                }
-            })
-            setProducts(nextProduct)
-
-            const nextCartData = cartData.map((data) => {
-                if (data.id === item.id) {
-                    return {
-                        ...data,
-                        quentity: data.quentity + 1
-                    }
-                } else {
-                    return data
-                }
-            })
-
-            setCartData(nextCartData)
-        }
-    }
-
-    function handelRemoveQuentity() {
-        if (item.quentity > 1) {
-            const nextProduct = products.map((i) => {
-                if (i.id === item.id) {
-                    return {
-                        ...i,
-                        stock: i.stock + 1,
-                        quentity: item.quentity - 1
-                    }
-                } else {
-                    return i
-                }
-            })
-            setProducts(nextProduct)
-
-            const nextCartData = cartData.map((data) => {
-                if (data.id === item.id) {
-                    return {
-                        ...data,
-                        quentity: data.quentity - 1
-                    }
-                } else {
-                    return data
-                }
-            })
-
-            setCartData(nextCartData)
-        }
-    }
-
-
     function handelRemoveProduct(item) {
         const nextProduct = products.map((product) => {
             if (product.id === item.id) {
@@ -92,8 +31,6 @@ export default function CartList({ item }) {
         setCartData(nextCartData)
     }
 
-
-
     return (
         <>
             <div className="flex items-start space-x-4 pb-4 border-b border-gray-200 mb-4">
@@ -113,7 +50,7 @@ export default function CartList({ item }) {
                         <p>stock{item.stock}</p>
                         <p>quentity{item.quentity}</p>
 
-                        <Counter item={item} onAdd={handelAddQuentity} onRemove={handelRemoveQuentity} />
+                        <Counter item={item} />
                     </div>
                 </div>
             </div>

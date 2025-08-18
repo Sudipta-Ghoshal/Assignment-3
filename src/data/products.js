@@ -19,7 +19,7 @@ const data = [
         price: 24,
         color: 'Blue',
         size: 'Medium',
-        mfd: "2024-04-27"
+        mfd: "2025-04-27"
     },
     {
         id: crypto.randomUUID(),
