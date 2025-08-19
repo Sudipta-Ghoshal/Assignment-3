@@ -85,7 +85,7 @@ const data = [
         price: 42,
         color: 'Blue Denim',
         size: '34',
-        mfd: "2022-06-15"
+        mfd: "2025-06-15"
     },
     {
         id: crypto.randomUUID(),

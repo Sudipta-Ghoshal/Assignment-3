@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Announcement from "./Announcement"
 
-import { CartContext, ProductContext } from './context'
+import { CartContext, ProductContext, SearchContext } from './context'
 import { getAllProducts } from './data/products'
 import Footer from "./Footer"
 import Header from "./Header"
@@ -16,22 +16,25 @@ function App() {
 
   const [cartData, setCartData] = useState([]);
   const [products, setProducts] = useState(initialData);
+  const [searchTerm, setSearchTerm] = useState('');
 
 
   return (
     <>
       <CartContext.Provider value={{ cartData, setCartData }}>
         <ProductContext.Provider value={{ products, setProducts }}>
-          <Announcement />
-          <Header />
-          <main className="container mx-auto px-4 md:px-8 py-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <ProductList />
-              <Cart />
-            </div>
-          </main>
-          <NewsLetter />
-          <Footer />
+          <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
+            <Announcement />
+            <Header />
+            <main className="container mx-auto px-4 md:px-8 py-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <ProductList />
+                <Cart />
+              </div>
+            </main>
+            <NewsLetter />
+            <Footer />
+          </SearchContext.Provider>
         </ProductContext.Provider>
       </CartContext.Provider>
     </>

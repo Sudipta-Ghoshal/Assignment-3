@@ -1,13 +1,16 @@
 import { useContext, useState } from 'react';
-import { ProductContext } from "../context";
+import { ProductContext, SearchContext } from "../context";
 import ProductCard from "./ProductCard";
 import Short from './Sort';
 
 export default function ProductList() {
 
     const { products } = useContext(ProductContext);
+    const { searchTerm } = useContext(SearchContext);
 
     const [sort, setSort] = useState('');
+
+    const filteredProducts = products.filter((product) => product.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
     switch (sort) {
         case 'newest':
@@ -28,6 +31,11 @@ export default function ProductList() {
         setSort(value)
     }
 
+    console.log(filteredProducts);
+    console.log(products);
+
+
+
 
     return (
         <div className="lg:col-span-2">
@@ -35,13 +43,13 @@ export default function ProductList() {
                 <h2 className="text-2xl font-bold">Your Products</h2>
                 <div className="flex items-center space-x-2">
                     <span className="text-sm">Sort by:</span>
-                    <Short onChange={handelSort} />
+                    <Short onSort={handelSort} />
                 </div>
             </div>
 
 
             <div className="product-grid">
-                {products.map((product) => (
+                {filteredProducts.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}
             </div>
