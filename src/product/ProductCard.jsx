@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import { CartContext, ProductContext } from "../context";
 import { getImgUrl } from "../utils/img-utility";
+import Rating from './Rating';
 
 export default function ProductCard({ product }) {
 
@@ -42,15 +43,13 @@ export default function ProductCard({ product }) {
                 <img src={getImgUrl(product.thumbnail)}
                     className="h-full w-auto object-cover"></img>
             </div>
+
             <div className="p-4">
                 <h3 className="font-medium">{product.title}</h3>
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center my-1">
-                        <div className="flex text-yellow-400">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span className="text-gray-300">★</span>
-                        </div>
-                        <span className="text-xs text-gray-500 ml-1">{product.rating}/5</span>
-                    </div>
+
+                    <Rating rating={product.rating} />
+
                     <span className="text-xs text-gray-700">({product.stock} pcs left)</span>
                 </div>
                 <p className="font-bold">${product.price}</p>

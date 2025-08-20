@@ -15,7 +15,7 @@ export default function Cart() {
                 {
                     cartData.length > 0 ?
                         (cartData.map((item) => (<CartList key={item.id} item={item} />))) :
-                        (<p className="text-2xl font-bold">Your Cart is Empty</p>)
+                        (<p className="text-2xl font-bold text-gray-400">Your Cart is Empty</p>)
                 }
 
                 <OrderSummary />

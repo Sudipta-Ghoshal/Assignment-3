@@ -31,12 +31,6 @@ export default function ProductList() {
         setSort(value)
     }
 
-    console.log(filteredProducts);
-    console.log(products);
-
-
-
-
     return (
         <div className="lg:col-span-2">
             <div className="flex items-center justify-between mb-6">
@@ -49,9 +43,14 @@ export default function ProductList() {
 
 
             <div className="product-grid">
-                {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
+                {
+                    filteredProducts.length === 0 ?
+                        (<h2 className="text-3xl font-bold text-center col-span-3 pt-28">No result found</h2>) :
+
+                        (filteredProducts.map((product) => (
+                            <ProductCard key={product.id} product={product} />
+                        )))
+                }
             </div>
         </div>
     );

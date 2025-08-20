@@ -47,8 +47,6 @@ export default function CartList({ item }) {
                     <p className="text-sm text-gray-500">Color: {item.color}</p>
                     <div className="flex justify-between items-center mt-2">
                         <p className="font-bold">${item.price}</p>
-                        <p>stock{item.stock}</p>
-                        <p>quentity{item.quentity}</p>
 
                         <Counter item={item} />
                     </div>
