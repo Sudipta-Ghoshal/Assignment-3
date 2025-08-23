@@ -1,5 +1,6 @@
 
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
 import { CartContext, ProductContext } from "../context";
 import { getImgUrl } from "../utils/img-utility";
 import Counter from './Counter';
@@ -22,6 +23,7 @@ export default function CartList({ item }) {
             }
         })
 
+
         setProducts(nextProduct)
 
         const nextCartData = cartData.filter((data) => {
@@ -29,6 +31,7 @@ export default function CartList({ item }) {
         })
 
         setCartData(nextCartData)
+        toast.error(`${item.title} removed to the cart`);
     }
 
     return (

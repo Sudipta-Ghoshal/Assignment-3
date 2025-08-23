@@ -2,12 +2,8 @@ import { useContext } from 'react';
 import { CartContext, ProductContext } from "../context";
 
 export default function Counter({ item }) {
-
-
     const { products, setProducts } = useContext(ProductContext);
     const { cartData, setCartData } = useContext(CartContext);
-
-
 
     function handelAddQuentity(item) {
         if (item.stock > item.quentity) {
@@ -45,7 +41,6 @@ export default function Counter({ item }) {
                     return {
                         ...i,
                         stock: i.stock + 1,
-                        quentity: item.quentity - 1
                     }
                 } else {
                     return i

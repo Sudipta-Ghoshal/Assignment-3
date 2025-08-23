@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import Announcement from "./Announcement"
+import { useState } from 'react';
+import Announcement from "./Announcement";
 
-import { CartContext, ProductContext, SearchContext } from './context'
-import { getAllProducts } from './data/products'
-import Footer from "./Footer"
-import Header from "./Header"
-import NewsLetter from "./NewsLetter"
-import Cart from "./product/Cart"
-import ProductList from "./product/ProductList"
+import { ToastContainer } from 'react-toastify';
+import { CartContext, ProductContext, SearchContext } from './context';
+import { getAllProducts } from './data/products';
+import Footer from "./Footer";
+import Header from "./Header";
+import NewsLetter from "./NewsLetter";
+import Cart from "./product/Cart";
+import ProductList from "./product/ProductList";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             </main>
             <NewsLetter />
             <Footer />
+            <ToastContainer position="bottom-right" newestOnTop />
           </SearchContext.Provider>
         </ProductContext.Provider>
       </CartContext.Provider>
