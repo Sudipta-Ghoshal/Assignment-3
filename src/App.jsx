@@ -1,14 +1,9 @@
 import { useState } from 'react';
-import Announcement from "./Announcement";
-
 import { ToastContainer } from 'react-toastify';
 import { CartContext, ProductContext, SearchContext } from './context';
 import { getAllProducts } from './data/products';
-import Footer from "./Footer";
-import Header from "./Header";
-import NewsLetter from "./NewsLetter";
-import Cart from "./product/Cart";
-import ProductList from "./product/ProductList";
+import Page from './Page';
+
 
 
 function App() {
@@ -25,17 +20,8 @@ function App() {
       <CartContext.Provider value={{ cartData, setCartData }}>
         <ProductContext.Provider value={{ products, setProducts }}>
           <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
-            <Announcement />
-            <Header />
-            <main className="container mx-auto px-4 md:px-8 py-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <ProductList />
-                <Cart />
-              </div>
-            </main>
-            <NewsLetter />
-            <Footer />
-            <ToastContainer position="bottom-right" newestOnTop />
+            <Page />
+            <ToastContainer position="bottom-right" newestOnTop autoClose={2000} />
           </SearchContext.Provider>
         </ProductContext.Provider>
       </CartContext.Provider>

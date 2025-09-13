@@ -11,7 +11,7 @@ export default function OrderSummary() {
     const subtotal = cartData.reduce(handelSubTotal, 0)
 
     function handelSubTotal(total, item) {
-        return total + (item.price * item.quentity)
+        return total + (item.price * item.quantity)
     }
 
     let discountAmount = parseFloat((subtotal * (discount / 100)).toFixed(2));

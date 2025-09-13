@@ -11,13 +11,13 @@ export default function Cart() {
         <div className="lg:col-span-1">
             <div className="bg-white rounded-lg p-6 border border-gray-200">
                 <h2 className="text-2xl font-bold mb-6">YOUR CART</h2>
-
-                {
-                    cartData.length > 0 ?
-                        (cartData.map((item) => (<CartList key={item.id} item={item} />))) :
-                        (<p className="text-2xl font-bold text-gray-400">Your Cart is Empty</p>)
-                }
-
+                <div className="mb-6 max-h-[420px] overflow-auto">
+                    {
+                        cartData.length > 0 ?
+                            (cartData.map((item) => (<CartList key={item.id} item={item} />))) :
+                            (<p className="text-2xl font-bold text-gray-400">Your Cart is Empty</p>)
+                    }
+                </div>
                 <OrderSummary />
             </div>
         </div>
