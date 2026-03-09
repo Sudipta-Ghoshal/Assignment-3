@@ -9,7 +9,7 @@ export function addToCart(item, cartData, setCartData, products, setProducts) {
     if (!found) {
         // reduce stock
         setProducts(products.map(p =>
-            p.id === item.id ? { ...p, stock: p.stock - 1, quantity: 1 } : p
+            p.id === item.id ? { ...p, stock: p.stock - 1 } : p
         ));
 
         // add item with quantity 1
@@ -44,11 +44,11 @@ export function updateQuantity(item, change, cartData, setCartData, products, se
 
     // update stock
     setProducts(products.map(p =>
-        p.id === item.id ? { ...p, stock: p.stock - change, quantity: p.quantity + change } : p
+        p.id === item.id ? { ...p, stock: p.stock - change } : p
     ));
 
     // update cart
     setCartData(cartData.map(c =>
-        c.id === item.id ? { ...c, quantity: c.quantity + change, stock: c.stock - change } : c
+        c.id === item.id ? { ...c, quantity: c.quantity + change } : c
     ));
 }
