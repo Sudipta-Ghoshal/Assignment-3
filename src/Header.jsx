@@ -27,9 +27,7 @@ export default function Header() {
           <Search />
 
           <a href="#" className="hover:text-gray-500 transition-colors">
-            <label htmlFor="cart" className="sr-only">
-              Cart
-            </label>
+            <span className="sr-only">Cart</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -47,9 +45,7 @@ export default function Header() {
           </a>
 
           <a href="#" className="hover:text-gray-500 transition-colors">
-            <label htmlFor="account" className="sr-only">
-              Account
-            </label>
+            <span className="sr-only">Account</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
