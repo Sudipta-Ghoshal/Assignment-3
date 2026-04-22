@@ -54,7 +54,7 @@ export default function ProductCard({ product }) {
         <h3 className="font-medium">{product.title}</h3>
         <div className="flex items-center justify-between">
           <Rating rating={product.rating} />
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-600">
             ({availableStock} pcs left)
           </span>
         </div>
