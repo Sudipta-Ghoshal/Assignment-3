@@ -1,12 +1,11 @@
 import { useContext } from "react";
-import { CartContext, ProductContext } from "../context";
+import { CartContext } from "../context";
 import { removeFromCart } from "../reducers/CartReducer";
 import { getImgUrl } from "../utils/img-utility";
 import Counter from "./Counter";
 
 export default function CartList({ item }) {
-  const { products, setProducts } = useContext(ProductContext);
-  const { cartData, setCartData } = useContext(CartContext);
+  const { dispatchCart } = useContext(CartContext);
 
   return (
     <>
@@ -21,21 +20,13 @@ export default function CartList({ item }) {
         <div className="flex-grow">
           <div className="flex justify-between">
             <h3 className="font-medium">{item.title}</h3>
-            <a
-              href="#"
+            <button
+              type="button"
               className="text-red-500 text-sm"
-              onClick={() =>
-                removeFromCart(
-                  item,
-                  cartData,
-                  setCartData,
-                  products,
-                  setProducts,
-                )
-              }
+              onClick={() => removeFromCart(item, dispatchCart)}
             >
               ×
-            </a>
+            </button>
           </div>
           <p className="text-sm text-gray-500">Size: {item.size}</p>
           <p className="text-sm text-gray-500">Color: {item.color}</p>

@@ -1,14 +1,18 @@
 import { useContext } from "react";
-import { CartContext, ProductContext } from "../context";
-import { addToCart, removeFromCart } from "../reducers/CartReducer";
+import { CartContext } from "../context";
+import {
+  addToCart,
+  getAvailableStock,
+  removeFromCart,
+} from "../reducers/CartReducer";
 import { getImgUrl } from "../utils/img-utility";
 import Rating from "./Rating";
 
 export default function ProductCard({ product }) {
-  const { cartData, setCartData } = useContext(CartContext);
-  const { products, setProducts } = useContext(ProductContext);
+  const { cartData, dispatchCart } = useContext(CartContext);
 
   const found = cartData.find((data) => data.id === product.id);
+  const availableStock = getAvailableStock(product, cartData);
 
   let button;
 
@@ -18,10 +22,8 @@ export default function ProductCard({ product }) {
         type="button"
         className="disabled:bg-gray-700 disabled:text-gray-400 disabled:cursor-not-allowed  w-full mt-2 bg-gray-800 py-1 text-gray-100 rounded flex items-center justify-center active:translate-y-1
          transition-all active:bg-gray-900"
-        onClick={() =>
-          addToCart(product, cartData, setCartData, products, setProducts)
-        }
-        disabled={product.stock <= 0}
+        onClick={() => addToCart(product, cartData, dispatchCart)}
+        disabled={availableStock <= 0}
       >
         Add to Cart
       </button>
@@ -30,12 +32,10 @@ export default function ProductCard({ product }) {
     button = (
       <button
         type="button"
-        onClick={() =>
-          removeFromCart(found, cartData, setCartData, products, setProducts)
-        }
+        onClick={() => removeFromCart(found, dispatchCart)}
         className="w-full mt-2 bg-red-800 py-1 text-gray-100 rounded flex items-center justify-center"
       >
-        {found.quentity}Remove from Cart
+        Remove from Cart ({found.quantity})
       </button>
     );
   }
@@ -54,7 +54,7 @@ export default function ProductCard({ product }) {
         <div className="flex items-center justify-between">
           <Rating rating={product.rating} />
           <span className="text-xs text-gray-700">
-            ({product.stock} pcs left)
+            ({availableStock} pcs left)
           </span>
         </div>
         <p className="font-bold">${product.price}</p>

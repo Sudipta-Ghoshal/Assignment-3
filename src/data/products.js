@@ -136,7 +136,7 @@ const data = [
 
 
 function getAllProducts() {
-    return data;
+    return data.map((product) => ({ ...product }));
 }
 
 export { getAllProducts };

@@ -1,54 +1,116 @@
 
 import { toast } from "react-toastify";
 
-/** Add an item to cart */
-export function addToCart(item, cartData, setCartData, products, setProducts) {
+export const CART_ACTIONS = {
+    ADD_ITEM: "cart/add-item",
+    REMOVE_ITEM: "cart/remove-item",
+    UPDATE_QUANTITY: "cart/update-quantity",
+};
 
-    const found = cartData.find((p) => p.id === item.id);
+export function cartReducer(cartData, action) {
+    switch (action.type) {
+        case CART_ACTIONS.ADD_ITEM: {
+            const item = action.payload;
+            const existingItem = cartData.find((cartItem) => cartItem.id === item.id);
 
-    if (!found) {
-        // reduce stock
-        setProducts(products.map(p =>
-            p.id === item.id ? { ...p, stock: p.stock - 1 } : p
-        ));
+            if (!existingItem) {
+                return [{ ...item, quantity: 1 }, ...cartData];
+            }
 
-        // add item with quantity 1
-        setCartData([{ ...item, quantity: 1 }, ...cartData]);
-        toast.success(`${item.title} added to the cart`);
-    } else {
-        // increase quantity
-        updateQuantity(item, +1, cartData, setCartData, products, setProducts);
-        toast.info(`Increased quantity of ${item.title}`);
+            if (existingItem.quantity >= item.stock) {
+                return cartData;
+            }
+
+            return cartData.map((cartItem) =>
+                cartItem.id === item.id
+                    ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                    : cartItem
+            );
+        }
+
+        case CART_ACTIONS.REMOVE_ITEM:
+            return cartData.filter((cartItem) => cartItem.id !== action.payload.id);
+
+        case CART_ACTIONS.UPDATE_QUANTITY: {
+            const { itemId, change, stock } = action.payload;
+
+            return cartData.map((cartItem) => {
+                if (cartItem.id !== itemId) {
+                    return cartItem;
+                }
+
+                const nextQuantity = cartItem.quantity + change;
+
+                if (nextQuantity < 1 || nextQuantity > stock) {
+                    return cartItem;
+                }
+
+                return { ...cartItem, quantity: nextQuantity };
+            });
+        }
+
+        default:
+            return cartData;
     }
 }
 
-/** Remove item completely from cart */
-export function removeFromCart(item, cartData, setCartData, products, setProducts) {
-    // restore stock
-    setProducts(products.map(p =>
-        p.id === item.id ? { ...p, stock: p.stock + item.quantity } : p
-    ));
+export function getCartQuantity(cartData, itemId) {
+    const cartItem = cartData.find((item) => item.id === itemId);
+    return cartItem?.quantity ?? 0;
+}
 
-    // remove from cart
-    setCartData(cartData.filter(p => p.id !== item.id));
+export function getAvailableStock(item, cartData) {
+    return item.stock - getCartQuantity(cartData, item.id);
+}
+
+export function addToCart(item, cartData, dispatchCart) {
+    const currentQuantity = getCartQuantity(cartData, item.id);
+
+    if (currentQuantity >= item.stock) {
+        toast.error(`${item.title} is out of stock`);
+        return;
+    }
+
+    dispatchCart({
+        type: CART_ACTIONS.ADD_ITEM,
+        payload: item,
+    });
+
+    if (currentQuantity === 0) {
+        toast.success(`${item.title} added to the cart`);
+        return;
+    }
+
+    toast.info(`Increased quantity of ${item.title}`);
+}
+
+export function removeFromCart(item, dispatchCart) {
+    dispatchCart({
+        type: CART_ACTIONS.REMOVE_ITEM,
+        payload: item,
+    });
+
     toast.error(`${item.title} removed from the cart`);
 }
 
-/** Update item quantity*/
-export function updateQuantity(item, change, cartData, setCartData, products, setProducts) {
-    const product = products.find((p) => p.id === item.id);
-    if (!product) return;
+export function updateQuantity(item, change, dispatchCart) {
+    const nextQuantity = item.quantity + change;
 
-    if (change === +1 && product.stock === 0) return; // no stock
-    if (change === -1 && item.quantity <= 1) return; // prevent 0
+    if (nextQuantity < 1) {
+        return;
+    }
 
-    // update stock
-    setProducts(products.map(p =>
-        p.id === item.id ? { ...p, stock: p.stock - change } : p
-    ));
+    if (nextQuantity > item.stock) {
+        toast.error(`No more ${item.title} in stock`);
+        return;
+    }
 
-    // update cart
-    setCartData(cartData.map(c =>
-        c.id === item.id ? { ...c, quantity: c.quantity + change } : c
-    ));
+    dispatchCart({
+        type: CART_ACTIONS.UPDATE_QUANTITY,
+        payload: {
+            itemId: item.id,
+            change,
+            stock: item.stock,
+        },
+    });
 }
