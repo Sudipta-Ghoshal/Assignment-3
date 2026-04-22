@@ -15,7 +15,7 @@ export default function Ratting({ rating }) {
             <div className="flex">
                 {stars}
             </div>
-            <span className="text-xs text-gray-500 ml-1">{rating}/5</span>
+            <span className="text-xs text-gray-600 ml-1">{rating}/5</span>
         </div>
     );
 }
