@@ -34,7 +34,7 @@ export default function OrderSummary() {
           <span className="text-gray-600">Subtotal</span>
           <span className="font-medium">${subtotal}</span>
         </div>
-        <div className="flex justify-between text-red-500">
+        <div className="flex justify-between text-red-600">
           <span>Discount (-{discount}%)</span>
           <span>-${discountAmount}</span>
         </div>
