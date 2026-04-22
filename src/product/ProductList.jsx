@@ -31,8 +31,9 @@ export default function ProductList() {
 
   return (
     <div className="lg:col-span-2">
+      <h1 className="sr-only">Your Products</h1>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Your Products</h1>
+        <h2 className="text-2xl font-bold">Your Products</h2>
         <div className="flex items-center space-x-2">
           <label htmlFor="sortBy" className="text-sm">
             Sort by:
