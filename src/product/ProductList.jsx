@@ -34,7 +34,9 @@ export default function ProductList() {
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">Your Products</h2>
         <div className="flex items-center space-x-2">
-          <span className="text-sm">Sort by:</span>
+          <label htmlFor="sortBy" className="text-sm">
+            Sort by:
+          </label>
           <Short onSort={handleSort} />
         </div>
       </div>
